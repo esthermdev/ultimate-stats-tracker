@@ -1,0 +1,44 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Player {
+  id           Int         @id @default(autoincrement())
+  name         String      @unique
+  opp          Int         @default(0)  // O Points Played
+  dpp          Int         @default(0)  // D Points Played
+  touches      Int         @default(0)  // Touches
+  goals        Int         @default(0)  // Goals
+  assists      Int         @default(0)  // Assists
+  defense      Int         @default(0)  // Defense/blocks
+  hucks        Int         @default(0)  // Hucks
+  rzto         Int         @default(0)  // Red Zone Turnovers
+  hto          Int         @default(0)  // Huck Turnovers
+  resetTo      Int         @default(0)  // Reset Turnovers
+  receiverErr  Int         @default(0)  // ReceiverFF Error
+  throwerErr   Int         @default(0)  // Thrower Error
+  // Relation to track detailed turnover events
+  turnovers    Turnover[]
+  team         String      // "Offence" or "Defence"
+}
+
+model Turnover {
+  id          Int       @id @default(autoincrement())
+  player      Player    @relation(fields: [playerId], references: [id], onDelete: Cascade)
+  playerId    Int
+  timestamp   String?   // Video timestamp (optional)
+  type        String    // Type of turnover: "rzto", "hto", "resetTo", "receiverErr", "throwerErr", or "regular"
+  createdAt   DateTime  @default(now())
+}
