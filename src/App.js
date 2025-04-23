@@ -350,18 +350,19 @@ function App() {
         <div className="loading-message">Loading players...</div>
       ) : (
         <div>
-          <h2>Offence</h2>
-          <PlayerTable 
-            players={oPlayers} 
-            onUpdateStat={updateStat}
-            onDeletePlayer={deletePlayer}
-          />    
           <h2>Defence</h2>
           <PlayerTable 
             players={dPlayers} 
             onUpdateStat={updateStat}
             onDeletePlayer={deletePlayer}
           />
+
+          <h2>Offence</h2>
+          <PlayerTable 
+            players={oPlayers} 
+            onUpdateStat={updateStat}
+            onDeletePlayer={deletePlayer}
+          />    
         </div>
       )}
       
