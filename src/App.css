@@ -1,38 +1,412 @@
+* {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
 .App {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  color: #333;
+}
+
+/* Header styles */
+.app-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.app-header h1 {
+  margin: 0;
+  font-size: 1.8rem;
+  color: #2c3e50;
+}
+
+.header-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.export-button {
+  padding: 8px 16px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.2s;
+}
+
+.export-button:hover {
+  background-color: #45a049;
+}
+
+/* Error message styles */
+.error-message {
+  background-color: #ffebee;
+  color: #c62828;
+  padding: 12px;
+  border-radius: 4px;
+  margin-bottom: 20px;
+  border-left: 4px solid #c62828;
+}
+
+.loading-message {
+  text-align: center;
+  padding: 20px;
+  font-style: italic;
+  color: #666;
+}
+
+.no-players {
+  text-align: center;
+  padding: 30px;
+  background-color: #f5f5f5;
+  border-radius: 4px;
+  color: #666;
+}
+
+/* Add player form styles */
+.add-player-form {
+  display: flex;
+  margin-bottom: 20px;
+  gap: 10px;
+}
+
+.add-player-form input {
+  flex: 1;
+  padding: 10px 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 16px;
+}
+
+.add-player-form button {
+  padding: 10px 16px;
+  background-color: #2196F3;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.2s;
+}
+
+.add-player-form button:hover {
+  background-color: #0b7dda;
+}
+
+.team-dropdown {
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+/* Table styles */
+.table-container {
+  overflow-x: auto;
+  border-radius: 4px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.stats-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 1000px;
+  background-color: white;
+}
+
+.stats-table th,
+.stats-table td {
+  border: 1px solid #e0e0e0;
+  padding: 12px 8px;
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.stats-table th {
+  background-color: #f5f5f5;
+  font-weight: 600;
+  color: #333;
+  position: sticky;
+  top: 0;
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
+.stats-table .player-name {
+  text-align: left;
+  font-weight: 500;
+  padding-left: 15px;
+}
+
+.stats-table .clickable {
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.stats-table .clickable:hover {
+  background-color: #e3f2fd;
+}
+
+.stats-table .calculated {
+  background-color: #f9f9f9;
+  font-weight: 500;
+}
+
+.stats-table .actions-cell {
+  width: 80px;
+}
+
+.stat-cell-to {
+  width: 75px
+}
+
+.delete-button {
+  padding: 6px 10px;
+  background-color: #f44336;
+  color: rgb(255, 255, 255);
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.8rem;
+  transition: background-color 0.2s;
+}
+
+.delete-button:hover {
+  background-color: #d32f2f;
+}
+
+/* Modal styles */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal {
+  background-color: white;
+  padding: 24px;
+  border-radius: 8px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+  width: 100%;
+  max-width: 480px;
+}
+
+.modal h3 {
+  margin-top: 0;
+  margin-bottom: 16px;
+  font-size: 1.2rem;
+  color: #2c3e50;
+}
+
+.modal p {
+  margin-bottom: 24px;
+  line-height: 1.5;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
+.cancel-button {
+  padding: 8px 16px;
+  background-color: #e0e0e0;
+  color: #333;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.2s;
+}
+
+.cancel-button:hover {
+  background-color: #d5d5d5;
+}
+
+.confirm-button {
+  padding: 8px 16px;
+  background-color: #2196F3;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.2s;
+}
+
+.confirm-button:hover {
+  background-color: #0b7dda;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .app-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+  
+  .header-actions {
+    width: 100%;
+  }
+  
+  .export-button {
+    flex: 1;
+    text-align: center;
+  }
+  
+  .add-player-form {
+    flex-direction: column;
+  }
+  
+  .add-player-form input,
+  .add-player-form button {
+    width: 100%;
   }
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+/* Turnover form styles */
+.turnover-form {
+  margin-bottom: 20px;
+}
+
+.form-group {
+  margin-bottom: 16px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 500;
+  color: #333;
+}
+
+.turnover-types {
   display: flex;
   flex-direction: column;
+  gap: 10px;
+}
+
+.radio-label {
+  display: flex;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+  cursor: pointer;
+}
+
+.radio-label input {
+  margin-right: 10px;
+}
+
+.timestamp-input {
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+  font-family: monospace;
+}
+
+.input-help {
+  display: block;
+  margin-top: 4px;
+  font-size: 12px;
+  color: #666;
+}
+
+/* Make the modal a bit larger to accommodate the form */
+.modal {
+  background-color: white;
+  padding: 24px;
+  border-radius: 8px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+  width: 100%;
+  max-width: 480px;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+/* Additional styles for the new turnover buttons */
+.turnover-buttons {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  margin-top: 10px;
+}
+
+.turnover-type-button {
+  padding: 12px;
+  border: none;
+  border-radius: 4px;
   color: white;
+  font-weight: 500;
+  font-size: medium;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 50px;
 }
 
-.App-link {
-  color: #61dafb;
+.turnover-type-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.turnover-type-button:active {
+  transform: translateY(0);
+}
+
+/* Colors for different turnover types */
+.turnover-type-button.rzto {
+  background-color: #e57373; /* Light red */
+}
+.turnover-type-button.rzto:hover {
+  background-color: #ef5350; /* Brighter red */
+}
+
+.turnover-type-button.hto {
+  background-color: #4fc3f7; /* Light blue */
+}
+.turnover-type-button.hto:hover {
+  background-color: #29b6f6; /* Brighter blue */
+}
+
+.turnover-type-button.reset {
+  background-color: #81c784; /* Light green */
+}
+.turnover-type-button.reset:hover {
+  background-color: #66bb6a; /* Brighter green */
+}
+
+.turnover-type-button.receiver {
+  background-color: #9575cd; /* Light purple */
+}
+.turnover-type-button.receiver:hover {
+  background-color: #7e57c2; /* Brighter purple */
+}
+
+.turnover-type-button.thrower {
+  background-color: #ffb74d; /* Light orange */
+}
+.turnover-type-button.thrower:hover {
+  background-color: #ffa726; /* Brighter orange */
+}
+
+.turnover-type-button.general {
+  background-color: #90a4ae; /* Light blue grey */
+}
+.turnover-type-button.general:hover {
+  background-color: #78909c; /* Brighter blue grey */
 }
