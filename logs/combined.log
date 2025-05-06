@@ -1,0 +1,12 @@
+{"level":"info","message":"Server started on port 5000","service":"ultimate-stats-tracker","timestamp":"2025-05-06T08:20:31.777Z"}
+{"error":"Connection timeout","level":"error","message":"Database connection failed","service":"ultimate-stats-tracker","timestamp":"2025-05-06T08:20:31.787Z"}
+{"level":"info","message":"Server started on port 5000","service":"ultimate-stats-tracker","timestamp":"2025-05-06T08:29:16.116Z"}
+{"error":"Connection timeout","level":"error","message":"Database connection failed","service":"ultimate-stats-tracker","timestamp":"2025-05-06T08:29:16.119Z"}
+{"level":"info","message":"Server started on port 5000","service":"ultimate-stats-tracker","timestamp":"2025-05-06T08:31:28.870Z"}
+{"error":"Connection timeout","level":"error","message":"Database connection failed","service":"ultimate-stats-tracker","timestamp":"2025-05-06T08:31:28.878Z"}
+{"level":"info","message":"Server started on port 5000","service":"ultimate-stats-tracker","timestamp":"2025-05-06T08:50:19.939Z"}
+{"error":"Connection timeout","level":"error","message":"Database connection failed","service":"ultimate-stats-tracker","timestamp":"2025-05-06T08:50:19.942Z"}
+{"level":"info","message":"Server started on port 5000","service":"ultimate-stats-tracker","timestamp":"2025-05-06T08:55:00.246Z"}
+{"error":"Connection timeout","level":"error","message":"Database connection failed","service":"ultimate-stats-tracker","timestamp":"2025-05-06T08:55:00.253Z"}
+{"level":"info","message":"Server started on port 5000","service":"ultimate-stats-tracker","timestamp":"2025-05-06T08:56:12.920Z"}
+{"error":"Connection timeout","level":"error","message":"Database connection failed","service":"ultimate-stats-tracker","timestamp":"2025-05-06T08:56:12.924Z"}

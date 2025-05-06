@@ -1,0 +1,68 @@
+services:
+  # Backend service
+  api:
+    build: 
+      context: .
+      dockerfile: Dockerfile.api
+    ports:
+      - "5000:5000"
+    environment:
+      - DATABASE_URL=postgresql://postgres:plasticplate@db:5432/ultimatestats
+    depends_on:
+      - db
+    networks:
+      - app-network
+    volumes:
+      - ./:/app
+      - /app/node_modules
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+        tag: "ultimate-api"
+
+  # Frontend service
+  client:
+    build:
+      context: ./client
+      dockerfile: Dockerfile.client
+    ports:
+      - "3000:80"
+    depends_on:
+      - api
+    networks:
+      - app-network
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+        tag: "ultimate-client"
+
+  # Database service
+  db:
+    image: postgres:15-alpine
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_PASSWORD=plasticplate
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=ultimatestats
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    networks:
+      - app-network
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+        tag: "ultimate-db"
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  postgres-data:

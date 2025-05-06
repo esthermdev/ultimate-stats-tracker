@@ -147,7 +147,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "/home/emdev/projects/ultimate-stats-tracker/generated/prisma",
+      "value": "/app/generated/prisma",
       "fromEnvVar": null
     },
     "config": {
@@ -156,12 +156,12 @@ const config = {
     "binaryTargets": [
       {
         "fromEnvVar": null,
-        "value": "linux-arm64-openssl-3.0.x",
+        "value": "linux-musl-arm64-openssl-3.0.x",
         "native": true
       }
     ],
     "previewFeatures": [],
-    "sourceFilePath": "/home/emdev/projects/ultimate-stats-tracker/prisma/schema.prisma",
+    "sourceFilePath": "/app/prisma/schema.prisma",
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
@@ -175,17 +175,18 @@ const config = {
     "db"
   ],
   "activeProvider": "postgresql",
+  "postinstall": false,
   "inlineDatasources": {
     "db": {
       "url": {
         "fromEnvVar": "DATABASE_URL",
-        "value": "prisma+postgres://accelerate.prisma-data.net/?api_key=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcGlfa2V5IjoiMTI3YmExMzItZmI4My00MmYwLWFiZmItNmYxNjkzYjJkNThjIiwidGVuYW50X2lkIjoiZDhlMzJiNzg0ODg0MjZhOWJiZDc4NzNkZWUxY2Y3ZjU2ZmU5MzFmNDEwNjViNWZmODI4MzBkYjk3ODZkYzU1ZSIsImludGVybmFsX3NlY3JldCI6ImIyNzZhOWE1LTZlOGQtNDNhMC1iZWRjLThkMzM0YjNmYjI4OCJ9.1j4oy-iPm7doKtOCoyvvkx-Im-Q6MYTiL0psiMNB9v4"
+        "value": null
       }
     }
   },
   "inlineSchema": "// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\n// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?\n// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init\n\ngenerator client {\n  provider = \"prisma-client-js\"\n  output   = \"../generated/prisma\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"DATABASE_URL\")\n}\n\nmodel Player {\n  id          Int        @id @default(autoincrement())\n  name        String     @unique\n  opp         Int        @default(0) // O Points Played\n  dpp         Int        @default(0) // D Points Played\n  touches     Int        @default(0) // Touches\n  goals       Int        @default(0) // Goals\n  assists     Int        @default(0) // Assists\n  defense     Int        @default(0) // Defense/blocks\n  hucks       Int        @default(0) // Hucks\n  rzto        Int        @default(0) // Red Zone Turnovers\n  hto         Int        @default(0) // Huck Turnovers\n  resetTo     Int        @default(0) // Reset Turnovers\n  receiverErr Int        @default(0) // ReceiverFF Error\n  throwerErr  Int        @default(0) // Thrower Error\n  // Relation to track detailed turnover events\n  turnovers   Turnover[]\n  team        String // \"Offence\" or \"Defence\"\n}\n\nmodel Turnover {\n  id        Int      @id @default(autoincrement())\n  player    Player   @relation(fields: [playerId], references: [id], onDelete: Cascade)\n  playerId  Int\n  timestamp String? // Video timestamp (optional)\n  type      String // Type of turnover: \"rzto\", \"hto\", \"resetTo\", \"receiverErr\", \"throwerErr\", or \"regular\"\n  createdAt DateTime @default(now())\n}\n",
   "inlineSchemaHash": "1b982dd23c217a30a43f1497ab2338191f8e7f22ac2a8edc35210ba911ceea88",
-  "copyEngine": false
+  "copyEngine": true
 }
 
 const fs = require('fs')
@@ -222,3 +223,9 @@ const PrismaClient = getPrismaClient(config)
 exports.PrismaClient = PrismaClient
 Object.assign(exports, Prisma)
 
+// file annotations for bundling tools to include these files
+path.join(__dirname, "libquery_engine-linux-musl-arm64-openssl-3.0.x.so.node");
+path.join(process.cwd(), "generated/prisma/libquery_engine-linux-musl-arm64-openssl-3.0.x.so.node")
+// file annotations for bundling tools to include these files
+path.join(__dirname, "schema.prisma");
+path.join(process.cwd(), "generated/prisma/schema.prisma")
