@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import logger from '../utils/logger';
 
 function AddPlayerForm({ onAddPlayer }) {
   const [name, setName] = useState('');
@@ -7,6 +8,7 @@ function AddPlayerForm({ onAddPlayer }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (name.trim()) {
+      logger.info(`Adding player: ${name} to team: ${team}`);
       onAddPlayer(name, team);
       setName('');
     }
